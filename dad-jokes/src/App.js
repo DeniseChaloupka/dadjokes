@@ -1,24 +1,27 @@
-import React from 'react';
-import './App.css';
-import UserSignUp from "./components/UserSignUp";
-import Navigation from "./components/Navigation";
-import JokesCardDisplay from "./components/JokesCardDisplay";
-import {Route} from "react-router-dom";
-import {BrowserRouter as Router} from "react-router-dom";
-import Login from "./components/Login";
-import SecurePath from "./components/PrivateRoute";
+import React from "react";
+import { Route } from "react-router-dom";
+import PrivateRoute from "./components/PrivateRoute.js";
+import "./App.css";
+
+import Dashboard from "./components/Dashboard";
+import Login from "./components/login/Login";
+import Register from "./components/login/Register";
+import JokePage from "./components/JokePage";
+import JokeProvider from "./contexts/JokeContext.js";
 
 function App() {
   return (
-   <Router>
-    <div>
-      <Navigation />
-      <Route exact path="/" component={JokesCardDisplay} />
-      <Route exact path="/signup" component={UserSignUp} />
-      <Route exact path="/login" component={Login} />
+    <div className="App">
+      <header className="App-header">
+        <JokeProvider>
+          <Route path="/login" component={Login} />
+          <Route path="/" exact component={Register} />
+          <PrivateRoute path="/dashboard" exact component={Dashboard} />
+          <Route path="/dashboard/:id" exact component={JokePage} />
+        </JokeProvider>
+      </header>
     </div>
-    </Router>
   );
 }
-    
+
 export default App;
